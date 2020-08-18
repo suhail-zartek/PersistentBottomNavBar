@@ -90,7 +90,7 @@ class _PersistentTabScaffoldState extends State<PersistentTabScaffold> {
   PersistentTabController _controller;
   int _selectedIndex;
   bool _isTapAction;
-
+  int selectCount=0;
   @override
   void initState() {
     super.initState();
@@ -237,14 +237,23 @@ class _PersistentTabScaffoldState extends State<PersistentTabScaffold> {
               alignment: Alignment.bottomCenter,
               child: widget.tabBar.copyWith(
                 selectedIndex: _controller.index,
-                onItemSelected: (int newIndex) {
-                  _controller.index = newIndex;
-                  if (widget.tabBar.onItemSelected != null) {
-                    setState(() {
-                      _selectedIndex = newIndex;
-                      _isTapAction = true;
-                      widget.tabBar.onItemSelected(newIndex);
-                    });
+                onItemSelected: (int newIndex) async{
+                  if(_controller.index==newIndex){
+                    print("dfdkmgkdmfg"+selectCount.toString());
+                    selectCount=selectCount+1;
+                  }else{
+                    selectCount=0;
+                  }
+                  if(selectCount<1){
+    _controller.index = newIndex;
+    if (widget.tabBar.onItemSelected != null) {
+      print("fxchgfdjhgfdg " + newIndex.toString());
+      setState(() {
+        _selectedIndex = newIndex;
+        _isTapAction = true;
+        widget.tabBar.onItemSelected(newIndex);
+      });
+    }
                   }
                 },
               ),
